@@ -197,6 +197,14 @@
           null,
           null,
           null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
           null
         ]
       },
@@ -218,55 +226,6 @@
           null
         ]
       },
-      "/Users/martinchavez/mod4/intermission_work/tea_subscription_service/spec/models/subscription_spec.rb": {
-        "lines": [
-          1,
-          null,
-          1,
-          null,
-          1,
-          null,
-          2,
-          2,
-          2,
-          2,
-          null,
-          2,
-          2,
-          null,
-          null,
-          null
-        ]
-      },
-      "/Users/martinchavez/mod4/intermission_work/tea_subscription_service/app/models/subscription.rb": {
-        "lines": [
-          1,
-          1,
-          null,
-          1,
-          null,
-          1,
-          1,
-          1,
-          null
-        ]
-      },
-      "/Users/martinchavez/mod4/intermission_work/tea_subscription_service/spec/models/tea_spec.rb": {
-        "lines": [
-          1,
-          null,
-          1,
-          1,
-          2,
-          2,
-          2,
-          2,
-          null,
-          2,
-          null,
-          null
-        ]
-      },
       "/Users/martinchavez/mod4/intermission_work/tea_subscription_service/app/models/tea.rb": {
         "lines": [
           1,
@@ -280,28 +239,8 @@
           null,
           null
         ]
-      },
-      "/Users/martinchavez/mod4/intermission_work/tea_subscription_service/spec/models/tea_subscription_spec.rb": {
-        "lines": [
-          1,
-          null,
-          1,
-          1,
-          2,
-          2,
-          null,
-          null
-        ]
-      },
-      "/Users/martinchavez/mod4/intermission_work/tea_subscription_service/app/models/tea_subscription.rb": {
-        "lines": [
-          1,
-          1,
-          1,
-          null
-        ]
       }
     },
-    "timestamp": 1714430582
+    "timestamp": 1714498344
   }
 }
