@@ -13,9 +13,9 @@ RSpec.describe 'Subscription create' do
           customer_email: "#{@customer1.email}",
           title: "#{@tea1.title}",
           price: 9.00,
-          frequency: "1 week"
+          status: 1 ,
+          frequency: "1 week",
         }
-
         headers = {
           "Content-Type": "application/json",
           "Accept": "application/json"
@@ -24,7 +24,80 @@ RSpec.describe 'Subscription create' do
         post api_v1_customer_subscriptions_path(@customer1), headers: headers, params: JSON.generate(params)
 
         result = JSON.parse(response.body, symbolize_names: true)
+        
+        expect(response.status).to eq(201)
+        expect(response).to be_successful
+
+        expect(result).to have_key(:data)
+
+        expect(result[:data]).to have_key(:id)
+        expect(result[:data]).to have_key(:type)
+        expect(result[:data]).to have_key(:attributes)
+
+        expect(result[:data][:id]).to be_a(String)
+        expect(result[:data][:type]).to be_a(String)
+
+        expect(result[:data][:attributes]).to have_key(:title)
+        expect(result[:data][:attributes]).to have_key(:price)
+        expect(result[:data][:attributes]).to have_key(:frequency)
+        expect(result[:data][:attributes]).to have_key(:status)
+
+
+        expect(result[:data][:attributes][:title]).to be_a(String)
+        expect(result[:data][:attributes][:price]).to be_a(String)
+        expect(result[:data][:attributes][:frequency]).to be_a(String)
+        expect(result[:data][:attributes][:status]).to be_a(String)
+      end
+    end
+
+    describe 'Sad Path' do
+      it 'errors when params are not met' do
+        params = {
+          customer_email: "#{@customer1.email}",
+          price: 9.00,
+          status: 1 ,
+        }
+
+        headers = {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        }
+        post api_v1_customer_subscriptions_path(@customer1), headers: headers, params: JSON.generate(params)
+
+        post api_v1_customer_subscriptions_path(@customer1), headers: headers, params: JSON.generate(params)
+
+        result = JSON.parse(response.body, symbolize_names: true)
+        
         # require 'pry'; binding.pry
+        expect(response.status).to eq(401)
+        expect(response).to_not be_successful
+
+        expect(result).to be_a(Hash)
+        expect(result[:title].first).to eq("can't be blank")
+        expect(result[:frequency].first).to eq("can't be blank")
+
+      end
+
+      it 'erros when email does not match up a customer' do
+        params = {
+          customer_email: "wrongemail@gmail.com",
+          title: "#{@tea1.title}",
+          price: 9.00,
+          status: 1 ,
+          frequency: "1 week",
+        }
+        headers = {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        }
+
+        post api_v1_customer_subscriptions_path(@customer1), headers: headers, params: JSON.generate(params)
+
+        result = JSON.parse(response.body, symbolize_names: true)
+        
+        expect(result).to be_a(Hash)        
+        expect(result[:error]).to be_a(String)        
+        expect(result[:error]).to eq("Sorry, your credentials are bad!")        
       end
     end
   end
