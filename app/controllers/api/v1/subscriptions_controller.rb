@@ -1,15 +1,24 @@
 class Api::V1::SubscriptionsController < ApplicationController
   def create
-    
     customer = find_customer_by_email(params[:customer_email])
     subscription = customer.subscriptions.new(sub_params)
-    
 
     if subscription.save
      render json: SubscriptionSerializer.new(subscription), status: :created
     else
      render json: subscription.errors, status: :unauthorized
     end
+  end
+
+  def update 
+    subscription = Subscription.find(params[:subscription_id])
+
+    if subscription.update(sub_params)
+      render json: SubscriptionSerializer.new(subscription), status: :ok
+    else
+      render json: subscription.errors, status: :unprocessable_entity
+    end
+    # require 'pry'; binding.pry
   end
 
   private 
