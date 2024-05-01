@@ -198,10 +198,16 @@ RSpec.describe 'Subscription create' do
 
     describe 'Sad path' do
       it 'errors when ID does not match' do
-        expect().to eq()
+        get "/api/v1/customers/5676/subscriptions"
+        
+        result = JSON.parse(response.body, symbolize_names: true)
+        
+        expect(response.status).to eq(401)
+        expect(response).to_not be_successful
+
+        expect(result).to have_key(:error)
+        expect(result[:error]).to eq("Sorry, your credentials are bad!")
       end
     end
   end
-
-
 end
