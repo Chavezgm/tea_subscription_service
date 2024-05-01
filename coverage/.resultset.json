@@ -243,6 +243,7 @@
       "/Users/martinchavez/mod4/intermission_work/tea_subscription_service/app/controllers/api/v1/subscriptions_controller.rb": {
         "lines": [
           1,
+          null,
           1,
           4,
           3,
@@ -262,6 +263,12 @@
           null,
           0,
           null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
           null,
           null,
           null,
@@ -316,6 +323,6 @@
         ]
       }
     },
-    "timestamp": 1714520717
+    "timestamp": 1714529150
   }
 }

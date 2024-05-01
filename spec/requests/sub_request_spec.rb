@@ -160,7 +160,48 @@ RSpec.describe 'Subscription create' do
         expect(result[:error]).to eq("Sorry, your credentials are bad!")
       end
     end
-
-
   end
+
+  describe 'subs Index' do
+    before :each do 
+      @customer1 = Customer.create!(first_name: "Bob",last_name: "Iroh", email: "dragonofthewest@gmail.com",address: "123 Pi Cho Ct, Ba Sing Se")
+      @customer2 = Customer.create!(first_name: "Jose",last_name: "Iroh", email: "nice@gmail.com",address: "123 first ave")
+      @tea1 = Tea.create!(title: "Ginseng",description: "Ginseng has been used for improving overall health. It has also been used to strengthen the immune system and help fight off stress and disease.",temperature: "208°F",brew_time: "5 - 10 minutes")
+      @subscription1 = @customer1.subscriptions.create!(title: "#{@tea1.title}",price: 6.00,frequency: "1 week", status: 1 )
+      @subscription2 = @customer1.subscriptions.create!(title: "subscription2 ",price: 9.00,frequency: "15 weeks" )
+      @subscription2 = @customer2.subscriptions.create!(title: "subscription3 ",price: 10.00,frequency: "4 weeks" )
+
+    end
+
+    describe 'Happy path ' do
+      it 'shows customer subscriptions' do
+        
+        get api_v1_customer_subscriptions_path(@customer1)
+
+        result = JSON.parse(response.body, symbolize_names: true)[:data]
+        
+        expect(result[0][:id]).to be_a(String)
+        expect(result[0][:type]).to be_a(String)
+        expect(result[0][:attributes][:title]).to be_a(String)
+        expect(result[0][:attributes][:price]).to be_a(String)
+        expect(result[0][:attributes][:frequency]).to be_a(String)
+        expect(result[0][:attributes][:status]).to be_a(String)
+         
+        expect(result[1][:type]).to eq("subscription")
+        expect(result[1][:attributes][:title]).to eq("subscription2 ")
+        expect(result[1][:attributes][:price]).to eq("9.0")
+        expect(result[1][:attributes][:frequency]).to eq("15 weeks")
+        expect(result[1][:attributes][:status]).to eq("cancelled")
+         
+      end
+    end
+
+    describe 'Sad path' do
+      it 'errors when ID does not match' do
+        expect().to eq()
+      end
+    end
+  end
+
+
 end
